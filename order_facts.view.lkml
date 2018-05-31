@@ -20,6 +20,7 @@ view: order_facts {
   dimension: user_id {
     type: number
     sql: ${TABLE}.user_id ;;
+    primary_key: yes
   }
 
   dimension: lifetime_orders {
@@ -45,6 +46,11 @@ view: order_facts {
   dimension: number_of_distinct_months_with_orders {
     type: number
     sql: ${TABLE}.number_of_distinct_months_with_orders ;;
+  }
+
+  dimension: days_as_customer {
+    type: number
+    sql: DATEDIFF('days',${first_order_date},${latest_order_date}) + 1 ;;
   }
 
   set: detail {
