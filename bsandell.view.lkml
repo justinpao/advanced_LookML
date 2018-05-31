@@ -20,17 +20,18 @@ view: bsandell {
     sql: ${TABLE}.end_time ;;
   }
 
-#   dimension: length_of_race {
-#     type: number
-#     sql: DATEDIFF('minutes',${race_facts.start_of_race} ,${race_facts.end_of_race}) ;;
-#     hidden: yes
-#   }
-#
-#   dimension: 15_min_intervals {
-#     type: tier
-#     tiers: [0,15,30,45,60,75,90,105,120,135,150,165,180,195,210,225]
-#     sql: ${length_of_race} ;;
-#   }
+  dimension: time_of_pit_stop {
+    type: number
+    sql: DATEDIFF('minutes',${race_facts.start_of_race_raw},${start_raw}) ;;
+  }
+
+#step-wise, dimension for point in time of the race in which the pit stop occurred, then bucket the nmber into the sections
+  dimension: 15_min_intervals {
+    type: tier
+    tiers: [15,30,45,60,75,90,105,120,135,150,165,180,195,210,225,240]
+    style: integer
+    sql: ${time_of_pit_stop} ;;
+  }
 
   dimension: number_of_pit_crew_members {
     type: number
@@ -75,4 +76,13 @@ view: bsandell {
     type: count
     drill_fields: []
   }
+  measure: number_of_racers {
+    type: count_distinct
+    sql: ${racer_id} ;;
+  }
+  measure: number_of_cars {
+    type: count_distinct
+    sql: ${car_id} ;;
+  }
+
 }
