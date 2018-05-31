@@ -13,7 +13,13 @@ datagroup: justin_advanced_lookml_default_datagroup {
 
 persist_with: justin_advanced_lookml_default_datagroup
 
-explore: bsandell {}
+explore: bsandell {
+  join: race_facts {
+    type: left_outer
+    sql_on: ${bsandell.car_id} = ${race_facts.car_id} ;;
+    relationship: one_to_one
+  }
+}
 
 explore: company_list {}
 
