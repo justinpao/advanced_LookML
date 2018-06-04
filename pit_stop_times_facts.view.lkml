@@ -19,6 +19,7 @@ view: pit_stop_times_facts {
   dimension: bsandell_racer_id {
     type: number
     sql: ${TABLE}."bsandell.racer_id" ;;
+    primary_key: yes
   }
 
   dimension: bsandell_pitstop_id {
