@@ -19,6 +19,11 @@ explore: bsandell {
     sql_on: ${bsandell.car_id} = ${race_facts.car_id} ;;
     relationship: one_to_one
   }
+  join: pit_stop_times_facts {
+    type: left_outer
+    sql_on: ${bsandell.racer_id} = ${pit_stop_times_facts.bsandell_racer_id} ;;
+    relationship: one_to_one
+  }
 }
 
 explore: company_list {}
